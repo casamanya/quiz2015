@@ -1,5 +1,21 @@
-<table>
+<% if (search) { %>
+    <h3>Mostrando preguntas según busqueda '<%= search %>'</h3>
+<% } else { %>
+    <h3>Mostrando todas las preguntas</h3>
+<% } %>
+
+<table class="tablecenter">
     <% var i; for (i=0; i < quizes.length; i++) { %>
     <tr><td><a href="quizes/<%=quizes[i].id %>"><%= quizes[i].pregunta %></a></td></tr>
     <% } %>
 </table>
+<br>
+<% if (search) { %>
+    <a href="/quizes">Volver</a>
+<% } else { %>
+    <form method="GET" action="/quizes">    
+        <p>Buscar preguntas<p>
+        <input type="text" name="search" value="nombre"/>
+        <input type="submit" value="Enviar"/>
+    </form>
+<% } %>

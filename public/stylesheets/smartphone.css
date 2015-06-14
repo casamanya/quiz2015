@@ -4,3 +4,4 @@ body                { background: #333; font-size: xx-large;}
 
 h2 span, section h3 { display: none;}
 footer, input       { font-size: large;}
+.tablecenter        {margin-left:auto;  margin-right:auto;  text-align: center;}
