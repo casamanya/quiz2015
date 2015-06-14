@@ -20,7 +20,7 @@ exports.index = function(req, res){
 	var search= req.query.search;
 	if (search && search.length>0){		
 		search = search.trim().replace(' ','%');
-		search = '\'%' + search + '%\'';
+		search = '%' + search + '%';
 		console.log('query de preguntas like ' + search);
 		models.Quiz.findAll({where: ["pregunta like ?", search]}).then(function (quizes){
 			res.render('quizes/index.ejs', {quizes:quizes, search: req.query.search});
