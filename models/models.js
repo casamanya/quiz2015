@@ -27,6 +27,7 @@ var sequelize = new Sequelize(DB_name, user, pwd,
 		omitNull: true // solo Postgres
 	}
 );
+
 	
 //importar definicion de la tabla Quiz
 var Quiz = sequelize.import(path.join(__dirname,'quiz'));
