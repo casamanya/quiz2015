@@ -10,12 +10,3 @@
     <% } %>
 </table>
 <br>
-<% if (search) { %>
-    <a href="/quizes">Volver</a>
-<% } else { %>
-    <form method="GET" action="/quizes">    
-        <p>Buscar preguntas<p>
-        <input type="text" name="search" value="nombre"/>
-        <input type="submit" value="Enviar"/>
-    </form>
-<% } %>
