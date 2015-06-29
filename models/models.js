@@ -1,3 +1,4 @@
+/// <reference path="../typings/node/node.d.ts"/>
 var path = require('path');
 
 // Postgres DATABASE_URL = postgres://user:passwd@host:port/database
