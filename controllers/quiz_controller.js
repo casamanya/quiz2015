@@ -54,7 +54,7 @@ exports.new = function(req, res) {
 		{pregunta: 'Pregunta', respuesta: 'Respuesta'}
 	);
 	
-	res.render('quizes/new', {quiz: quiz, errors: []});
+	res.render('quizes/new', {quiz: quiz, errors: [], state:'create'});
 };
 
 //POST /quizes/create
@@ -65,7 +65,7 @@ exports.create = function(req, res){
 	.then(
 		function(err){
 			if (err){
-				res.render('quizes/new',{quiz:quiz, errors: err.errors});
+				res.render('quizes/new',{quiz:quiz, errors: err.errors, state: 'create'});
 			} else{
 				quiz.save({fields: ['pregunta', 'respuesta']}).then( function()
 					{ 
@@ -76,4 +76,37 @@ exports.create = function(req, res){
 		}				
 	);	
 		
+};
+
+//GET quizes/:id/edit
+exports.edit = function(req, res) {
+	var quiz = req.quiz;
+	
+	res.render('quizes/edit',{quiz:quiz, errors:[], state: 'edit'});
+};
+
+// PUT quizes/:id
+exports.update = function(req, res) {
+	
+	req.quiz.pregunta = req.body.quiz.pregunta;
+	req.quiz.respuesta = req.body.quiz.respuesta;
+	
+	
+	req.quiz
+	.validate()
+	.then(
+		function(err){
+			if (err){
+				res.render('quizes/edit',{quiz:req.quiz, errors: err.errors, state: 'edit'});
+			} else {
+				req.quiz
+				.save({fields: ['pregunta', 'respuesta']})
+				.then(function()
+					{ 
+						res.redirect('/quizes');
+					}
+				);
+			}
+		}
+	);
 };
