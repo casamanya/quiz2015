@@ -13,12 +13,27 @@
 
 <label for="tema" class="rem">Tema:</label>
 <select id="tema" name="quiz[tema]">
-  <option value="otro" <% if(quiz.tema=='otro') {%> selected <%} %> >Otro</option>
-  <option value="humanidades" <% if(quiz.tema=='humanidades') {%> selected <%} %> >Humanidades</option>
-  <option value="ocio" <% if(quiz.tema=='ocio') {%> selected <%} %> >Ocio</option>
-  <option value="ciencia" <% if(quiz.tema=='ciencia') {%> selected <%} %> >Ciencia</option>
-  <option value="tecnologia" <% if(quiz.tema=='tecnologia') {%> selected <%} %> >Tecnología</option>
-</select>
+ <%
+  var selected = '';
+  [
+    {"value": "seleccione", "text": "Seleccione ..." },
+    {"value": "ciencia", "text": "Ciencia"},
+    {"value": "humanidades", "text": "humanidades"},
+    {"value": "tecnologia", "text": "Tecnología"},
+    {"value": "ocio", "text": "Ocio"},
+    {"value": "otro", "text": "Otro"}
+  ].forEach(function(ot){
+
+      if(ot.value == quiz.tema){
+        selected = 'selected';
+      }else{
+        selected = '';
+      }
+
+  %>
+  <option value="<%= ot.value %>" <%= selected %> > <%= ot.text %> </option>
+  <% }); %>
+ </select>
 <p>
 
 <a href="/quizes"><button type="button">Cancelar</button></a>

@@ -2,7 +2,12 @@ var models = require('../models/models.js');
 
 //Load
 exports.load = function(req, res, next, quizId){
-	models.Quiz.findById(quizId).then(
+	models.Quiz.find({
+		where: {id: Number(quizId)},
+			include: [{
+				model: models.Comment
+			}]
+		}).then(
 		function (quiz){
 			if (quiz){
 				req.quiz=quiz;
@@ -51,7 +56,7 @@ exports.answer = function(req, res){
 // GET /quizes/new
 exports.new = function(req, res) {
 	var quiz = models.Quiz.build(
-		{pregunta: 'Pregunta', respuesta: 'Respuesta', tema: 'otro'}
+		{pregunta: 'Pregunta', respuesta: 'Respuesta', tema: 'seleccione'}
 	);
 	
 	res.render('quizes/new', {quiz: quiz, errors: [], state:'create'});
