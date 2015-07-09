@@ -20,7 +20,7 @@ exports.calculate = function(req, res, next){
 			stats.promedioComentarios = stats.totalComentarios / stats.totalPreguntas;
 			
 			//Preguntas con comentarios
-			var qry='select COUNT(DISTINCT `QuizId` ) as num from "Comments"';
+			var qry='select COUNT(DISTINCT "QuizId" ) as num from "Comments"';
 			//var qry = 'SELECT count(*) AS n FROM "Quizzes" WHERE "id" IN (SELECT DISTINCT "QuizId" FROM "Comments")';
 			models.Sequelize.query(qry)
 			.then(function( results ){
