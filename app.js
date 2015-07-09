@@ -30,9 +30,41 @@ app.use(session());
 app.use(methodOverride('_method')); //Para poder usar PUT
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Gestion de auto-logout de session (2 minutos)
+
+app.use(function(req,res,next){
+ 
+ //fecha actual
+ var now= new Date();
+ 
+  //Recuperar fecha session ultima trans (si hay) 
+ if (req.session.lastTrans){
+   var dosMins=2*1000*60; //2 minutos en milisegunds
+   var last = new Date(req.session.lastTrans);
+   var diff=now.getTime() - last.getTime();
+   
+   console.log('Diferencia entre transa: ' + diff);
+    
+   if (diff>dosMins){
+    //Elminar sessoin
+      console.log('Regenrando session i redireccion');
+      req.session.destroy();
+      res.redirect('/quizes');
+      return;
+   } else{
+     req.session.lastTrans= now;
+   }         
+ } else {
+   req.session.lastTrans= now;
+ }
+
+  next();       
+  
+});
+
+
 // Helpers dinamicos:
 app.use(function(req, res, next) {
-
   
   // guardar path en session.redir para despues de login
   if (!req.path.match(/\/login|\/logout/)) {
@@ -43,6 +75,8 @@ app.use(function(req, res, next) {
   res.locals.session = req.session;
   next();
 });
+
+
 
 app.use('/', routes);
 
