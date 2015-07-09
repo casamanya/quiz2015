@@ -25,15 +25,23 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var serverSecure = https.createServer(options,app);
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+var serverSecure = https.createServer(options, app);
+  serverSecure.listen(8443, function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-serverSecure.listen(port);
+server.on('error', onError);
 serverSecure.on('error', onError);
-serverSecure.on('listening', onListening);
+//server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -86,11 +94,11 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
-
+/*
 function onListening() {
-  var addr = serverSecure.address();
+  var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-}
+}*/
