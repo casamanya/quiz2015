@@ -31,7 +31,7 @@ var serverSecure = https.createServer(options,app);
  * Listen on provided port, on all network interfaces.
  */
 
-serverSecure.listen(8443);
+serverSecure.listen(port);
 serverSecure.on('error', onError);
 serverSecure.on('listening', onListening);
 
